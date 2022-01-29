@@ -15,6 +15,9 @@ pipeline {
         stage("Pipeline"){
             steps {
                 script{
+
+	            slackSend color: 'good', message: "[Su Nombre] [${JOB_NAME}] [${BUILD_TAG}] Ejecucion Exitosa", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'tokenslack'
+                slackSend color: 'danger', message: "[Su Nombre] [${env.JOB_NAME}] [${BUILD_TAG}] Ejecucion fallida en stage [${env.TAREA}]", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'tokenslack'
                   switch(params.compileTool)
                     {
                         case 'Maven':
@@ -25,6 +28,9 @@ pipeline {
                             def ejecucion = load 'gradle.groovy'
                             ejecucion.call()
                         break;
+
+
+
                     }
                 }
             }
